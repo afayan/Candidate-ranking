@@ -18,7 +18,7 @@ function norm(str = "") {
 function canonSkill(skill = "") {
   const s = norm(skill);
 
-  // Small alias map for common variants in your dataset
+  // aliasing
   const aliases = {
     "node js": "nodejs",
     "node": "nodejs",
@@ -65,8 +65,7 @@ export async function POST(request) {
   try {
     const { jobDescription, filters } = await request.json();
 
-    /* ---------------- HARD FILTERING ---------------- */
-
+    //HARD FILTERING
     const filtered = candidates.filter((candidate) => {
       if (filters?.minExperience && candidate.experience < filters.minExperience) {
         return false;
@@ -87,7 +86,7 @@ export async function POST(request) {
       return true;
     });
 
-    /* ---------------- SCORING (ELIGIBLE) ---------------- */
+    //SCORING
 
     const scoredResults = filtered.map((candidate) => {
       const requiredRaw = jobDescription?.requiredSkills || [];
@@ -99,7 +98,7 @@ export async function POST(request) {
       const candSkills = uniqueCanonicalSkills(candidate.skills || []);
       const candSkillSet = new Set(candSkills);
 
-      // Exact canonical matches
+      // Exact matches
       const matchedRequired = required.filter((s) => candSkillSet.has(s));
       const matchedPreferred = preferred.filter((s) => candSkillSet.has(s));
 
@@ -122,7 +121,7 @@ export async function POST(request) {
       const preferredCoverage =
         preferred.length > 0 ? matchedPreferred.length / preferred.length : 0;
 
-      // Experience score: meets min => 1, plus small bonus for extra years (up to +0.15)
+      // Experience score
       const minExp = jobDescription?.minExperience;
       let experienceScore = 1;
       if (minExp) {
@@ -161,7 +160,7 @@ export async function POST(request) {
         experienceScore * 0.18 +
         semanticScore * 0.07;
 
-      // Penalize missing required (up to 40% reduction)
+      // Penalize missing required
       finalScore *= (1 - Math.min(missingPenalty * 0.4, 0.4));
 
       finalScore = clamp01(finalScore);
@@ -183,7 +182,7 @@ export async function POST(request) {
       };
     });
 
-    /* ---------------- INELIGIBLE CANDIDATES ---------------- */
+    //NOT ELLIGIBLE
 
     const ineligible = candidates
       .filter((candidate) => !filtered.some((f) => f.id === candidate.id))
