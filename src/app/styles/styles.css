@@ -1,0 +1,46 @@
+h1{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.mainform{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: gray;
+    padding: 20px;
+    border-radius: 10px;
+    width: 47vw;
+}
+
+.main{
+    display: flex;
+}
+
+.mainform label{
+    margin-top: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.mainform textarea{
+    transition: all 0.4s ease;
+}
+
+.mainform input{
+    padding: 8px;
+    border: none;
+    transition: all 0.4s ease;
+}
+
+.mainform input:focus, .mainform textarea:focus{
+    outline: none;
+    background-color: rgb(206, 206, 206);
+}
+
+.mainform button{
+    margin-top: 10px;
+    background-color: orange;
+    padding: 8px;
+    border: none;
+    width: 300px;
+    cursor: pointer;
+}
