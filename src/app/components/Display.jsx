@@ -8,9 +8,16 @@ function Display({results}) {
         <div >
           <h2>Ranked Candidates</h2>
           {results.map((c, index) => (
-            <div key={c.candidateId}>
+            <div key={c.candidateId} className={
+                c.score === 0
+                    ? "unfit result"
+                    : c.score < 0.5
+                    ? "average result"
+                    : "fit result"
+                }
+                >
               <h3>
-                #{index + 1} {c.name} — Score: {c.score}
+                {index + 1} {c.name} — Score: {c.score}
               </h3>
               <p>Matched Skills: {c.matchedSkills.join(", ")}</p>
               <p>Missing Skills: {c.missingSkills.join(", ")}</p>

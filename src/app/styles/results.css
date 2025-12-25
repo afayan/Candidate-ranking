@@ -6,3 +6,24 @@
     border-radius: 8px;
     margin-left: 8px;
 }
+
+.result{
+    padding: 8px;
+    margin: 8px;
+    border-radius: 8px;
+}
+
+.fit{
+    background-color: rgb(98, 223, 98);
+    color: black;
+
+}
+
+.average{
+    background-color: rgb(251, 251, 116);
+    color: black;
+}
+
+.unfit{
+    background-color: rgb(197, 76, 76) !important;
+}
